@@ -7,37 +7,40 @@ import datetime
 
 
 class BaseModel:
-    """
-    The BaseModel class represents a fundamental data model.
+    """The BaseModel class represents a fundamental data model."""
 
-    Attributes:
-        id : A unique identifier for each instance.
-        created_at : The timestamp when the instance is created.
-        updated_at : The timestamp when the instance is last updated.
-    """
-
-    def __init__(self, id=None, created_at=None, updated_at=None):
+    def __init__(self, *args, **kwargs):
         """
         Initialize a BaseModel instance.
 
         Args:
-            id : The unique identifier for the instance.
-                Defaults to a new UUID.
-            created_at : The timestamp of creation.
-                Defaults to the current datetime.
-            updated_at : The timestamp of the last update.
-                Defaults to created_at.
-        """
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.datetime.now()
-        self.updated_at = self.created_at
+            *args: Not used in this implementation.
+            **kwargs: A dictionary of attribute-value pairs.
+
+        Notes:
+            If kwargs is not empty:
+            - Each key is an attribute name.
+            - Each value is the value of the attribute.
+
+            If kwargs is empty:
+            - id is generated as a new UUID.
+            - created_at is set to the current datetime.
+	"""
+        if kwargs:  # If kwargs is not empty
+            for key, value in kwargs.items():
+                if key == 'created_at' or key == 'updated_at':
+                    setattr(self, key, datetime.datetime.strptime(value,
+            '%Y-%m-%dT%H:%M:%S.%f'))
+                elif key != '__class__':
+                    setattr(self, key, value)
+        else:  # If kwargs is empty
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.datetime.now()
+            self.updated_at = self.created_at
 
     def __str__(self):
         """
         Return a string representation of the BaseModel instance.
-
-        Returns:
-            str: A formatted string with the class name, id, and attributes.
         """
         return "[{}] ({}) {}".\
             format(type(self).__name__, self.id, self.__dict__)
