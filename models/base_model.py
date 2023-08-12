@@ -20,7 +20,8 @@ class BaseModel:
         if kwargs:  # If kwargs is not empty
             for key, value in kwargs.items():
                 if key == 'created_at' or key == 'updated_at':
-                    setattr(self, key, datetime.datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f'))
+                    setattr(self, key, datetime.datetime.strptime(value,
+                                                                  '%Y-%m-%dT%H:%M:%S.%f'))
                 elif key != '__class__':
                     setattr(self, key, value)
                 else:  # If kwargs is empty
