@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """Defines the command interpreter for HolbertonBnB."""
 import cmd
+import re
+from shlex import split
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
@@ -9,7 +11,24 @@ from models.city import City
 from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
-from shlex import split
+
+
+def parse(arg):
+    curly_braces_match = re.search(r"\{(.*?)\}", arg)
+    brackets_match = re.search(r"\[(.*?)\]", arg)
+    if curly_braces_match is None:
+        if brackets_match is None:
+            return [item.strip(",") for item in split(arg)]
+        else:
+            before_brackets = split(arg[:brackets_match.span()[0]])
+            arguments = [item.strip(",") for item in before_brackets]
+            arguments.append(brackets_match.group())
+            return arguments
+    else:
+        before_brackets = split(arg[:curly_braces_match.span()[0]])
+        arguments = [item.strip(",") for item in before_brackets]
+        arguments.append(curly_braces_match.group())
+        return arguments
 
 
 class HBNBCommand(cmd.Cmd):
