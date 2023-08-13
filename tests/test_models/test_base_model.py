@@ -2,9 +2,7 @@
 """This module define a Python unittest for base_model.py
 
 Unittest classes:
-    base_model__Public_instance
-    base_model__save
-    base_model__to_dict
+    TestBaseModel
 
 """
 
