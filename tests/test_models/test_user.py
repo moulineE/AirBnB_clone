@@ -16,26 +16,33 @@ import pycodestyle
 class TestUser(unittest.TestCase):
 
     def setUp(self):
+        """creat an instance of User"""
         self.user = User()
 
     def test_instance_creation(self):
+        """unittest the User intance creation and
+        attributes setting
+        """
         self.assertIsInstance(self.user, User)
         self.assertTrue(hasattr(self.user, 'id'))
         self.assertTrue(hasattr(self.user, 'created_at'))
         self.assertTrue(hasattr(self.user, 'updated_at'))
 
     def test_attribute_types(self):
+        """unittest if attr is a str"""
         self.assertIsInstance(self.user.email, str)
         self.assertIsInstance(self.user.password, str)
         self.assertIsInstance(self.user.first_name, str)
         self.assertIsInstance(self.user.last_name, str)
 
     def test_str_method(self):
+        """test BaseModel _str_method with User """
         expected_str = "[User] ({}) {}".format(self.user.id,
                                                self.user.__dict__)
         self.assertEqual(str(self.user), expected_str)
 
     def test_to_dict_method(self):
+        """unittest if BaseModel to_dict_method is valid"""
         self.user.email = "airbnb@mail.com"
         self.user.password = "root"
         self.user.first_name = "Betty"
