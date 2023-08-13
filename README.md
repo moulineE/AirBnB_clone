@@ -58,5 +58,5 @@ $
 
 ## Authors
 
-Mohamed Ezghoudi <mohamedezghoudi@gmail.com>
-El mahdi Mouline <elmahdi.mouline@live.fr>
+* Mohamed Ezghoudi <mohamedezghoudi@gmail.com>
+* El mahdi Mouline <elmahdi.mouline@live.fr>
